@@ -3,8 +3,8 @@ import * as THREE from 'three';
 import gsap from 'gsap';
 import { vertexShader, fragmentShader } from './HeroShaders';
 
-import imgBatman from "../assets/batman/batman.png";
-import imgPerson from '../assets/person/mine_1.png';
+import imgBatman from "../assets/batman/batman.webp";
+import imgPerson from '../assets/person/mine_1.webp';
 
 export default function Hero() {
   const containerRef = useRef(null);

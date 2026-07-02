@@ -2,8 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-import imgBatman from "../assets/batman/batman.png";
-import imgPerson from '../assets/person/mine_1.png';
+import imgBatman from "../assets/batman/batman.webp";
+import imgPerson from '../assets/person/mine_1.webp';
 import logo from "../assets/logo/logo.png";
 
 
@@ -93,6 +93,7 @@ export default function About() {
           <img 
             src={imgPerson} 
             alt="Developer Persona" 
+            loading="lazy"
             className="absolute inset-0 w-full h-full object-cover object-center grayscale opacity-60 mix-blend-luminosity brightness-75 transition-all duration-700 group-hover:scale-105"
           />
 
@@ -110,6 +111,7 @@ export default function About() {
             <img 
               src={imgBatman} 
               alt="Batman Persona" 
+              loading="lazy"
               className="absolute inset-0 w-full h-full object-cover object-center scale-105 group-hover:scale-110 transition-transform duration-[2s] ease-out"
             />
             

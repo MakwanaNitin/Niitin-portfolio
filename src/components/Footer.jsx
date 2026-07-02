@@ -1,5 +1,5 @@
 import React from 'react';
-import imgPerson from '../assets/person/mine_1.png';
+import imgPerson from '../assets/person/mine_1.webp';
 
 const BatSymbol = () => (
   <svg viewBox="0 0 200 120" width="40" height="24" fill="currentColor">
@@ -66,7 +66,7 @@ export default function Footer() {
 
           {/* Profile */}
           <div style={{ textAlign: 'center' }}>
-            <img src={imgPerson} alt="Nitin" style={{
+            <img src={imgPerson} alt="Nitin" loading="lazy" style={{
               width: 80, height: 80, objectFit: 'cover', objectPosition: 'top',
               border: '1px solid rgba(255,215,0,0.2)',
               marginBottom: 12,

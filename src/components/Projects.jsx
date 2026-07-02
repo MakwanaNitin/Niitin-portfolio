@@ -2,9 +2,9 @@ import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-import imgBatman from "../assets/batman/batman.png";
+import imgBatman from "../assets/batman/batman.webp";
 
-import imgPerson from '../assets/person/mine_1.png';
+import imgPerson from '../assets/person/mine_1.webp';
 import logo from "../assets/logo/logo.png";
 
 
@@ -112,6 +112,7 @@ const ProjectCard = ({ project }) => {
           ref={imageRef}
           src={project.image} 
           alt={project.name} 
+          loading="lazy"
           className={`absolute inset-0 w-full h-[120%] -top-[10%] object-cover object-center ${project.blend} transition-all duration-[1.5s]`}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent z-10" />
