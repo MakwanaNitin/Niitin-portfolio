@@ -1,6 +1,35 @@
 import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 
+// Hand-written inline SVG icons — no external icon package required, so
+// there's nothing extra to install and nothing that can go out of sync
+// with package-lock.json.
+const IconInstagram = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...props}>
+    <rect x="3" y="3" width="18" height="18" rx="5" />
+    <circle cx="12" cy="12" r="4" />
+    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+  </svg>
+);
+
+const IconX = (props) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+);
+
+const IconGitHub = (props) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M12 .5C5.73.5.5 5.73.5 12c0 5.09 3.29 9.4 7.86 10.93.58.1.79-.25.79-.56 0-.27-.01-1.17-.02-2.12-3.2.7-3.88-1.36-3.88-1.36-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.08-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.18 1.18a11.06 11.06 0 0 1 5.79 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.77.11 3.06.74.8 1.19 1.82 1.19 3.08 0 4.41-2.7 5.38-5.27 5.67.42.36.78 1.07.78 2.17 0 1.56-.01 2.82-.01 3.2 0 .31.21.67.8.56A10.52 10.52 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5Z" />
+  </svg>
+);
+
+const IconLinkedIn = (props) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.59 0 4.25 2.36 4.25 5.44v6.3ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45Z" />
+  </svg>
+);
+
 const NAV_LINKS = [
   { name: 'Home', href: '#home' },
   { name: 'About', href: '#about' },
@@ -9,6 +38,13 @@ const NAV_LINKS = [
   { name: 'Experience', href: '#experience' },
   { name: 'Certificates', href: '#certificates' },
   { name: 'Contact', href: '#contact' },
+];
+
+const SOCIALS = [
+  { Icon: IconInstagram, href: 'https://instagram.com', label: 'Instagram' },
+  { Icon: IconX, href: 'https://x.com', label: 'X (Twitter)' },
+  { Icon: IconGitHub, href: 'https://github.com/MakwanaNitin', label: 'GitHub' },
+  { Icon: IconLinkedIn, href: 'https://www.linkedin.com/in/makwana-niitin', label: 'LinkedIn' },
 ];
 
 export default function Navbar() {
@@ -79,16 +115,16 @@ export default function Navbar() {
           <a
             href="#home"
             onClick={handleNavClick('#home')}
-            className="flex items-center gap-2 cursor-pointer group"
+            className="flex items-center gap-3 cursor-pointer group"
             aria-label="Nitin Makwana — back to top"
           >
             <span
-              className="flex items-center justify-center w-9 h-9 rounded-lg text-sm font-bold font-display text-white transition-transform duration-500 group-hover:scale-110"
-              style={{ background: 'linear-gradient(135deg, var(--accent) 0%, var(--accent-bright) 100%)' }}
+              className="block w-9 h-9 rounded-full overflow-hidden transition-transform duration-500 group-hover:scale-110"
+              style={{ boxShadow: '0 0 0 2px rgba(139,92,246,0.5)' }}
             >
-              N
+              <img src={`${import.meta.env.BASE_URL}profile.jpg`} alt="" className="w-full h-full object-cover" />
             </span>
-            <span className="text-white font-semibold tracking-wide text-sm ml-1 opacity-90 group-hover:opacity-100 transition-opacity font-display">
+            <span className="text-white font-semibold tracking-wide text-sm opacity-90 group-hover:opacity-100 transition-opacity font-display">
               Nitin Makwana
             </span>
           </a>
@@ -112,20 +148,21 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden lg:block">
-            <a
-              href="#contact"
-              onClick={handleNavClick('#contact')}
-              ref={(el) => (linksRef.current[NAV_LINKS.length] = el)}
-              className="relative px-6 py-2.5 rounded-full overflow-hidden group bg-transparent border border-white/15 text-white text-sm font-medium tracking-wide hover:border-[var(--accent-bright)] transition-colors duration-300"
-            >
-              <span className="relative z-10">Let's Talk</span>
-              <div
-                className="absolute inset-0 h-full w-full scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] -z-0 opacity-90"
-                style={{ background: 'linear-gradient(135deg, var(--accent) 0%, var(--accent-bright) 100%)' }}
-              />
-            </a>
+          {/* Social icons */}
+          <div className="hidden lg:flex items-center gap-4">
+            {SOCIALS.map((social, index) => (
+              <a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={social.label}
+                ref={(el) => (linksRef.current[NAV_LINKS.length + index] = el)}
+                className="text-gray-400 hover:text-white transition-colors duration-300 hover:scale-110 transform"
+              >
+                <social.Icon style={{ width: 17, height: 17 }} />
+              </a>
+            ))}
           </div>
 
           {/* Mobile Hamburger */}
@@ -163,15 +200,20 @@ export default function Navbar() {
             </a>
           ))}
 
-          <a
-            href="#contact"
-            onClick={handleNavClick('#contact')}
-            ref={(el) => (mobileLinksRef.current[NAV_LINKS.length] = el)}
-            className="mt-6 px-8 py-3 rounded-full tracking-widest transition-all duration-300"
-            style={{ border: '1px solid var(--accent-bright)', color: 'var(--accent-bright)' }}
-          >
-            Let's Talk
-          </a>
+          <div className="flex items-center gap-6 mt-6" ref={(el) => (mobileLinksRef.current[NAV_LINKS.length] = el)}>
+            {SOCIALS.map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={social.label}
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <social.Icon style={{ width: 22, height: 22 }} />
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </>

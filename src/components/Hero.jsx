@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import OrbitalTech from './OrbitalTech';
+import TechRadar from './TechRadar';
 
 export default function Hero() {
   const badgeRef = useRef(null);
   const headingRef = useRef(null);
   const subRef = useRef(null);
   const ctaRef = useRef(null);
-  const orbitRef = useRef(null);
+  const radarRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -22,7 +22,7 @@ export default function Hero() {
         )
         .fromTo(subRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8 }, '-=0.5')
         .fromTo(ctaRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8 }, '-=0.6')
-        .fromTo(orbitRef.current, { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 1.1 }, '-=0.9');
+        .fromTo(radarRef.current, { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 1.1 }, '-=0.9');
     });
 
     return () => ctx.revert();
@@ -59,84 +59,83 @@ export default function Hero() {
         />
       </div>
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-10 lg:px-16 pt-32 pb-20 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-        {/* Left: copy */}
-        <div className="text-left">
-          <div
-            ref={badgeRef}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs md:text-sm font-medium mb-8"
-            style={{
-              background: 'var(--surface)',
-              border: '1px solid var(--border-subtle)',
-              color: 'var(--text-secondary)',
-            }}
-          >
-            <span className="relative flex h-2 w-2">
-              <span
-                className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60"
-                style={{ background: 'var(--accent-bright)' }}
-              />
-              <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: 'var(--accent-bright)' }} />
-            </span>
-            Available &middot; Software Developer
-          </div>
+      {/* Decorative static tech radar, positioned right, behind copy */}
+      <div ref={radarRef} className="absolute top-1/2 right-[-40px] -translate-y-1/2 z-0">
+        <TechRadar />
+      </div>
 
-          <h1
-            ref={headingRef}
-            className="font-display font-bold tracking-tight leading-[1.02] text-[clamp(2.75rem,7vw,5rem)] mb-6"
-          >
-            <span className="block text-white">NITIN</span>
-            <span className="block gradient-text">MAKWANA</span>
-          </h1>
-
-          <p ref={subRef} className="max-w-md text-base md:text-lg mb-1" style={{ color: 'var(--text-secondary)' }}>
-            <span className="text-white font-medium">Software Developer</span> &middot; Full-Stack Developer
-          </p>
-          <p className="max-w-md text-base md:text-lg mb-10" style={{ color: 'var(--text-muted)' }}>
-            Building practical software and digital products with React, Node.js, and modern web technologies.
-          </p>
-
-          <div ref={ctaRef} className="flex flex-wrap items-center gap-4">
-            <a
-              href="#projects"
-              onClick={scrollTo('projects')}
-              className="px-7 py-3.5 rounded-full text-sm font-semibold tracking-wide text-white transition-all duration-300 hover:scale-[1.03]"
-              style={{
-                background: 'linear-gradient(135deg, var(--accent) 0%, var(--accent-bright) 100%)',
-                boxShadow: '0 0 24px rgba(139,92,246,0.35)',
-              }}
-            >
-              View Projects
-            </a>
-            <a
-              href={`${import.meta.env.BASE_URL}resume.pdf`}
-              download
-              className="px-7 py-3.5 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 hover:scale-[1.03]"
-              style={{ border: '1px solid var(--border-subtle)', color: 'var(--text-primary)', background: 'var(--surface)' }}
-            >
-              Download Resume
-            </a>
-          </div>
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-10 lg:px-16 pt-32 pb-20">
+        <div className="max-w-2xl">
+        <div
+          ref={badgeRef}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs md:text-sm font-medium mb-8"
+          style={{
+            background: 'var(--surface)',
+            border: '1px solid var(--border-subtle)',
+            color: 'var(--text-secondary)',
+          }}
+        >
+          <span className="relative flex h-2 w-2">
+            <span
+              className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60"
+              style={{ background: 'var(--accent-bright)' }}
+            />
+            <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: 'var(--accent-bright)' }} />
+          </span>
+          Software Developer &middot; Full-Stack Developer
         </div>
 
-        {/* Right: orbital tech visualization + profile portrait */}
-        <div ref={orbitRef} className="relative flex items-center justify-center">
-          <OrbitalTech />
-          <div
-            className="absolute rounded-full overflow-hidden"
+        <h1
+          ref={headingRef}
+          className="font-display font-bold tracking-tight leading-[1.02] text-[clamp(2.5rem,6.5vw,4.75rem)] mb-6 flex flex-wrap items-center gap-x-5 gap-y-2"
+        >
+          <span className="block text-white w-full">Hi, I'm</span>
+          <span className="inline-flex items-center gap-5">
+            <span className="gradient-text">Nitin</span>
+            <span
+              className="inline-block rounded-full overflow-hidden align-middle"
+              style={{
+                width: 84,
+                height: 84,
+                boxShadow: '0 0 0 3px rgba(139,92,246,0.55), 0 0 40px rgba(139,92,246,0.35)',
+              }}
+            >
+              <img
+                src={`${import.meta.env.BASE_URL}profile.jpg`}
+                alt="Nitin Makwana"
+                className="w-full h-full object-cover"
+                loading="eager"
+              />
+            </span>
+          </span>
+          <span className="block text-white w-full">Makwana</span>
+        </h1>
+
+        <p ref={subRef} className="max-w-lg text-base md:text-lg mb-10" style={{ color: 'var(--text-secondary)' }}>
+          Building practical software and digital products with React, Node.js, and modern web technologies.
+        </p>
+
+        <div ref={ctaRef} className="flex flex-wrap items-center gap-4">
+          <a
+            href="#projects"
+            onClick={scrollTo('projects')}
+            className="px-7 py-3.5 rounded-full text-sm font-semibold tracking-wide text-white transition-all duration-300 hover:scale-[1.03]"
             style={{
-              width: 128,
-              height: 128,
-              boxShadow: '0 0 0 3px rgba(139,92,246,0.55), 0 0 40px rgba(139,92,246,0.35)',
+              background: 'linear-gradient(135deg, var(--accent) 0%, var(--accent-bright) 100%)',
+              boxShadow: '0 0 24px rgba(139,92,246,0.35)',
             }}
           >
-            <img
-              src={`${import.meta.env.BASE_URL}profile.jpg`}
-              alt="Nitin Makwana"
-              className="w-full h-full object-cover"
-              loading="eager"
-            />
-          </div>
+            View Projects
+          </a>
+          <a
+            href={`${import.meta.env.BASE_URL}resume.pdf`}
+            download
+            className="px-7 py-3.5 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 hover:scale-[1.03]"
+            style={{ border: '1px solid var(--border-subtle)', color: 'var(--text-primary)', background: 'var(--surface)' }}
+          >
+            Download Resume
+          </a>
+        </div>
         </div>
       </div>
     </section>
