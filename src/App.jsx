@@ -1,27 +1,33 @@
 import React, { useState } from 'react';
-import Loader from './components/Loader';
-import Navbar from './components/Navbar';
+import Boot from './components/Boot';
+import Dock from './components/Dock';
 import Hero from './components/Hero';
+import ChoosePath from './components/ChoosePath';
 import About from './components/About';
-import Skills from './components/Skills';
-import Projects from './components/Projects';
-import Experience from './components/Experience';
+import Work from './components/Work';
+import TechMap from './components/TechMap';
+import Journey from './components/Journey';
+import Stats from './components/Stats';
+import CurrentlyBuilding from './components/CurrentlyBuilding';
 import Certificates from './components/Certificates';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [booted, setBooted] = useState(false);
 
   return (
     <>
-      {isLoading && <Loader onComplete={() => setIsLoading(false)} />}
-      <Navbar />
+      {!booted && <Boot onComplete={() => setBooted(true)} />}
+      <Dock />
       <Hero />
+      <ChoosePath />
       <About />
-      <Skills />
-      <Projects />
-      <Experience />
+      <Work />
+      <Stats />
+      <TechMap />
+      <Journey />
+      <CurrentlyBuilding />
       <Certificates />
       <Contact />
       <Footer />

@@ -95,25 +95,25 @@ export default function TechRadar() {
             height: r * 2,
             marginLeft: -r,
             marginTop: -r,
-            border: '1px solid rgba(139,92,246,0.14)',
+            border: '1px solid rgba(255,30,45,0.14)',
           }}
         />
       ))}
       {/* Radar cross-hair spokes */}
       <div
         className="absolute top-1/2 left-0 right-0 pointer-events-none"
-        style={{ height: 1, background: 'linear-gradient(90deg, transparent, rgba(139,92,246,0.12), transparent)' }}
+        style={{ height: 1, background: 'linear-gradient(90deg, transparent, rgba(255,30,45,0.12), transparent)' }}
       />
       <div
         className="absolute left-1/2 top-0 bottom-0 pointer-events-none"
-        style={{ width: 1, background: 'linear-gradient(180deg, transparent, rgba(139,92,246,0.12), transparent)' }}
+        style={{ width: 1, background: 'linear-gradient(180deg, transparent, rgba(255,30,45,0.12), transparent)' }}
       />
 
       {/* Ambient glow */}
       <div
         className="absolute inset-0 rounded-full pointer-events-none"
         style={{
-          background: 'radial-gradient(circle at 50% 50%, rgba(139,92,246,0.18) 0%, transparent 65%)',
+          background: 'radial-gradient(circle at 50% 50%, rgba(255,30,45,0.18) 0%, transparent 65%)',
           filter: 'blur(10px)',
         }}
       />
@@ -130,7 +130,7 @@ export default function TechRadar() {
             width: icon.size,
             height: icon.size,
             background: 'rgba(255,255,255,0.04)',
-            border: '1px solid rgba(139,92,246,0.25)',
+            border: '1px solid rgba(255,30,45,0.25)',
             boxShadow: '0 8px 24px rgba(0,0,0,0.35)',
           }}
         >

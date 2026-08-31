@@ -18,12 +18,12 @@ const SORT_OPTIONS = ['Default', 'A-Z', 'Z-A', 'Category'];
 function CertPlaceholder({ title, issuer, category }) {
   const colorMap = {
     Android: 'from-green-900/60 to-emerald-900/40',
-    'Web Development': 'from-purple-900/60 to-indigo-900/40',
+    'Web Development': 'from-cyan-900/40 to-zinc-800/40',
     Programming: 'from-orange-900/60 to-amber-900/40',
     Cloud: 'from-sky-900/60 to-blue-900/40',
     Database: 'from-pink-900/60 to-rose-900/40',
     'Cyber Security': 'from-red-900/60 to-rose-900/40',
-    AI: 'from-violet-900/60 to-purple-900/40',
+    AI: 'from-violet-900/40 to-zinc-800/40',
     Other: 'from-zinc-800/60 to-zinc-700/40',
   };
   const gradient = colorMap[category] || colorMap.Other;
@@ -34,18 +34,18 @@ function CertPlaceholder({ title, issuer, category }) {
   return (
     <div className={`w-full h-full bg-gradient-to-br ${gradient} flex flex-col items-center justify-center gap-3 relative overflow-hidden`}>
       <div className="absolute inset-0 opacity-10"
-        style={{ backgroundImage: 'linear-gradient(#a855f7 1px, transparent 1px), linear-gradient(90deg, #a855f7 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
+        style={{ backgroundImage: 'linear-gradient(var(--accent) 1px, transparent 1px), linear-gradient(90deg, var(--accent) 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
       <div style={{ fontSize: '2.5rem' }}>
         {iconMap[category] || iconMap.Other}
       </div>
-      <div style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.55rem', color: 'rgba(168,85,247,0.7)', letterSpacing: '0.2em', textAlign: 'center', padding: '0 12px' }}>
+      <div style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.55rem', color: 'rgba(255,30,45,0.7)', letterSpacing: '0.2em', textAlign: 'center', padding: '0 12px' }}>
         {issuer.toUpperCase()}
       </div>
       <div style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.8rem', color: 'rgba(255,255,255,0.6)', textAlign: 'center', padding: '0 16px', lineHeight: 1.3 }}>
         {title}
       </div>
       <div className="absolute bottom-3 right-3 w-8 h-8 opacity-20">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#a855f7" strokeWidth="1.5">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="1.5">
           <path d="M12 2 L21 7 V17 L12 22 L3 17 V7 Z" />
         </svg>
       </div>
@@ -83,13 +83,13 @@ function CertModal({ cert, onClose }) {
       <div
         ref={boxRef}
         className="relative w-full max-w-2xl rounded-2xl overflow-hidden border"
-        style={{ background: 'rgba(10,10,10,0.95)', borderColor: 'rgba(168,85,247,0.2)', boxShadow: '0 0 60px rgba(168,85,247,0.1)' }}
+        style={{ background: 'rgba(10,10,10,0.95)', borderColor: 'rgba(255,30,45,0.2)', boxShadow: '0 0 60px rgba(255,30,45,0.1)' }}
       >
         {/* Close */}
         <button
           onClick={handleClose}
           aria-label="Close certificate preview"
-          className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full border border-white/20 flex items-center justify-center text-gray-400 hover:text-white hover:border-purple-400/60 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400/60"
+          className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full border border-white/20 flex items-center justify-center text-gray-400 hover:text-white hover:border-red-400/60 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400/60"
         >
           ✕
         </button>
@@ -99,7 +99,7 @@ function CertModal({ cert, onClose }) {
           <CertPlaceholder title={cert.title} issuer={cert.issuer} category={cert.category} />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
           <div className="absolute top-3 right-3 z-10" aria-hidden="true">
-            <span style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.45rem', letterSpacing: '0.2em', padding: '4px 10px', borderRadius: 999, background: 'rgba(0,0,0,0.7)', border: '1px solid rgba(168,85,247,0.4)', color: '#a855f7' }}>
+            <span style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.45rem', letterSpacing: '0.2em', padding: '4px 10px', borderRadius: 999, background: 'rgba(0,0,0,0.7)', border: '1px solid rgba(255,30,45,0.4)', color: 'var(--accent)' }}>
               PDF
             </span>
           </div>
@@ -107,11 +107,11 @@ function CertModal({ cert, onClose }) {
 
         {/* Content */}
         <div className="p-8">
-          <div style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.6rem', color: '#a855f7', letterSpacing: '0.25em', marginBottom: 8 }}>
+          <div style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.6rem', color: 'var(--accent)', letterSpacing: '0.25em', marginBottom: 8 }}>
             CERTIFICATE OF COMPLETION
           </div>
           <h3 style={{ fontFamily: 'sans-serif', fontSize: '1.5rem', fontWeight: 700, color: '#fff', marginBottom: 4 }}>{cert.title}</h3>
-          <div style={{ fontFamily: 'Inter, sans-serif', color: 'rgba(168,85,247,0.8)', fontSize: '1rem', marginBottom: 16 }}>
+          <div style={{ fontFamily: 'Inter, sans-serif', color: 'rgba(255,30,45,0.8)', fontSize: '1rem', marginBottom: 16 }}>
             {cert.issuer} · {cert.category}
           </div>
           <p style={{ fontFamily: 'Inter, sans-serif', color: 'rgba(255,255,255,0.6)', lineHeight: 1.7, marginBottom: 20 }}>
@@ -119,7 +119,7 @@ function CertModal({ cert, onClose }) {
           </p>
           <div className="flex flex-wrap gap-2 mb-6">
             {cert.skills.map(s => (
-              <span key={s} style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.5rem', letterSpacing: '0.15em', padding: '5px 12px', border: '1px solid rgba(168,85,247,0.3)', borderRadius: 999, color: 'rgba(168,85,247,0.8)', background: 'rgba(168,85,247,0.08)' }}>{s}</span>
+              <span key={s} style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.5rem', letterSpacing: '0.15em', padding: '5px 12px', border: '1px solid rgba(255,30,45,0.3)', borderRadius: 999, color: 'rgba(255,30,45,0.8)', background: 'rgba(255,30,45,0.08)' }}>{s}</span>
             ))}
           </div>
           <div className="flex gap-3">
@@ -128,7 +128,7 @@ function CertModal({ cert, onClose }) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`View ${cert.title} certificate PDF in a new tab`}
-              className="flex-1 py-3 rounded-full border border-purple-400/40 text-purple-400 text-sm tracking-widest font-medium hover:bg-purple-400 hover:text-white transition-all duration-400 text-center"
+              className="flex-1 py-3 rounded-full border border-red-400/40 text-red-400 text-sm tracking-widest font-medium hover:bg-red-400 hover:text-white transition-all duration-400 text-center"
               style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.6rem', letterSpacing: '0.15em' }}
             >
               VIEW PDF
@@ -137,7 +137,7 @@ function CertModal({ cert, onClose }) {
               href={cert.url}
               download={cert.filename}
               aria-label={`Download ${cert.title} certificate PDF`}
-              className="flex-1 py-3 rounded-full border border-white/20 text-white text-sm tracking-widest font-medium hover:border-purple-400/60 transition-all duration-300 text-center"
+              className="flex-1 py-3 rounded-full border border-white/20 text-white text-sm tracking-widest font-medium hover:border-red-400/60 transition-all duration-300 text-center"
               style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.6rem', letterSpacing: '0.15em' }}
             >
               DOWNLOAD PDF
@@ -159,7 +159,7 @@ function AnimCounter({ target, suffix = '', label, inView }) {
   }, [inView, target]);
   return (
     <div className="flex flex-col items-center">
-      <div style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '2rem', fontWeight: 700, color: '#a855f7', textShadow: '0 0 20px rgba(168,85,247,0.4)' }}>
+      <div style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '2rem', fontWeight: 700, color: 'var(--accent)', textShadow: '0 0 20px rgba(255,30,45,0.4)' }}>
         {typeof target === 'string' ? target : `${val}${suffix}`}
       </div>
       <div style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.85rem', color: 'rgba(255,255,255,0.4)', letterSpacing: '0.15em', textTransform: 'uppercase', marginTop: 4 }}>
@@ -201,14 +201,14 @@ function CertCard({ cert, onView, index }) {
         transition: 'border-color 0.3s',
         animationDelay: `${index * 0.08}s`,
       }}
-      onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(168,85,247,0.3)'; }}
+      onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(255,30,45,0.3)'; }}
       onMouseOut={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; }}
     >
       {/* Hover Glow */}
       <div
         ref={glowRef}
         className="absolute w-48 h-48 rounded-full pointer-events-none z-10 -translate-x-1/2 -translate-y-1/2 opacity-0 mix-blend-screen"
-        style={{ background: 'radial-gradient(circle, rgba(168,85,247,0.15) 0%, transparent 70%)' }}
+        style={{ background: 'radial-gradient(circle, rgba(255,30,45,0.15) 0%, transparent 70%)' }}
       />
 
       {/* Image */}
@@ -217,7 +217,7 @@ function CertCard({ cert, onView, index }) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
         {/* Category Badge */}
         <div className="absolute top-3 left-3 z-10">
-          <span style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.45rem', letterSpacing: '0.2em', padding: '4px 10px', borderRadius: 999, background: 'rgba(0,0,0,0.7)', border: '1px solid rgba(168,85,247,0.4)', color: '#a855f7' }}>
+          <span style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.45rem', letterSpacing: '0.2em', padding: '4px 10px', borderRadius: 999, background: 'rgba(0,0,0,0.7)', border: '1px solid rgba(255,30,45,0.4)', color: 'var(--accent)' }}>
             {cert.category.toUpperCase()}
           </span>
         </div>
@@ -225,7 +225,7 @@ function CertCard({ cert, onView, index }) {
 
       {/* Content */}
       <div className="p-5" style={{ transform: 'translateZ(20px)' }}>
-        <div style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.55rem', color: 'rgba(168,85,247,0.6)', letterSpacing: '0.2em', marginBottom: 6 }}>
+        <div style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.55rem', color: 'rgba(255,30,45,0.6)', letterSpacing: '0.2em', marginBottom: 6 }}>
           {cert.issuer.toUpperCase()}
         </div>
         <h3 style={{ fontFamily: 'sans-serif', fontSize: '1.05rem', fontWeight: 700, color: '#fff', marginBottom: 8, lineHeight: 1.3 }}>
@@ -249,10 +249,10 @@ function CertCard({ cert, onView, index }) {
           <button
             onClick={() => onView(cert)}
             aria-label={`View ${cert.title} certificate`}
-            className="flex-1 py-2.5 rounded-full border text-xs tracking-widest font-medium transition-all duration-400 hover:scale-[1.02] group/btn relative overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400/60"
-            style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.5rem', letterSpacing: '0.15em', borderColor: 'rgba(168,85,247,0.4)', color: '#a855f7' }}
+            className="flex-1 py-2.5 rounded-full border text-xs tracking-widest font-medium transition-all duration-400 hover:scale-[1.02] group/btn relative overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400/60"
+            style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.5rem', letterSpacing: '0.15em', borderColor: 'rgba(255,30,45,0.4)', color: 'var(--accent)' }}
           >
-            <span className="absolute inset-0 bg-purple-400 scale-x-0 origin-left group-hover/btn:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)]" />
+            <span className="absolute inset-0 bg-red-400 scale-x-0 origin-left group-hover/btn:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)]" />
             <span className="relative z-10 group-hover/btn:text-white transition-colors duration-300">VIEW</span>
           </button>
           <a
@@ -260,7 +260,7 @@ function CertCard({ cert, onView, index }) {
             download={cert.filename}
             onClick={(e) => e.stopPropagation()}
             aria-label={`Download ${cert.title} certificate PDF`}
-            className="flex-1 py-2.5 rounded-full border text-xs tracking-widest font-medium transition-all duration-300 hover:border-purple-400/40 text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400/60"
+            className="flex-1 py-2.5 rounded-full border text-xs tracking-widest font-medium transition-all duration-300 hover:border-red-400/40 text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400/60"
             style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.5rem', letterSpacing: '0.15em', borderColor: 'rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.5)' }}
           >
             DOWNLOAD
@@ -359,34 +359,33 @@ export default function Certificates() {
 
   return (
     <section
-      id="certificates"
+      id="vault"
       ref={sectionRef}
-      className="w-full min-h-screen bg-black py-32 px-6 md:px-12 lg:px-24 relative overflow-hidden"
+      className="w-full py-24 px-6 md:px-12 lg:px-24 relative overflow-hidden"
+      style={{ background: 'var(--bg-primary)' }}
     >
       {/* Background grid */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.025] z-0"
         style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '100px 100px' }} />
       {/* Ambient glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] rounded-full pointer-events-none z-0"
-        style={{ background: 'rgba(168,85,247,0.04)', filter: 'blur(120px)' }} />
+        style={{ background: 'rgba(255,30,45,0.04)', filter: 'blur(120px)' }} />
 
       <div className="max-w-[90rem] mx-auto w-full relative z-10">
 
         {/* ── Header ── */}
         <div ref={headerRef} className="mb-16 md:mb-20 flex flex-col md:flex-row md:items-end justify-between border-b border-white/10 pb-8">
           <div className="max-w-2xl">
-            <p className="text-purple-400 font-mono text-sm tracking-[0.3em] uppercase font-bold mb-4" style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.6rem' }}>
-              [ Verified Credentials ]
-            </p>
+            <p className="section-eyebrow mb-4">Achievement Vault</p>
             <h2 style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', fontWeight: 700, letterSpacing: '-0.03em', color: '#fff', lineHeight: 1, marginBottom: 12 }}>
               Certificates &amp;{' '}
-              <span style={{ fontStyle: 'italic', fontWeight: 300, background: 'linear-gradient(90deg, #a855f7, #fff)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+              <span style={{ fontStyle: 'italic', fontWeight: 300, background: 'linear-gradient(90deg, var(--accent), #fff)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
                 Achievements
               </span>
             </h2>
           </div>
           <p style={{ fontFamily: 'Inter, sans-serif', color: 'rgba(255,255,255,0.35)', fontSize: '1rem', maxWidth: 320, lineHeight: 1.6, marginTop: 16 }}>
-            Professional Certifications, Achievements & Learning Journey
+            Verified credentials, organized and searchable &mdash; not a wall of repeated cards.
           </p>
         </div>
 
@@ -414,9 +413,9 @@ export default function Certificates() {
               value={search}
               onChange={e => setSearch(e.target.value)}
               className="w-full px-5 py-3.5 pr-12 rounded-xl border outline-none transition-all duration-300 text-white"
-              style={{ background: 'rgba(255,255,255,0.04)', borderColor: search ? 'rgba(168,85,247,0.4)' : 'rgba(255,255,255,0.1)', fontFamily: 'Inter, sans-serif', fontSize: '0.95rem' }}
-              onFocus={e => { e.target.style.borderColor = 'rgba(168,85,247,0.5)'; e.target.style.boxShadow = '0 0 20px rgba(168,85,247,0.1)'; }}
-              onBlur={e => { e.target.style.borderColor = search ? 'rgba(168,85,247,0.4)' : 'rgba(255,255,255,0.1)'; e.target.style.boxShadow = 'none'; }}
+              style={{ background: 'rgba(255,255,255,0.04)', borderColor: search ? 'rgba(255,30,45,0.4)' : 'rgba(255,255,255,0.1)', fontFamily: 'Inter, sans-serif', fontSize: '0.95rem' }}
+              onFocus={e => { e.target.style.borderColor = 'rgba(255,30,45,0.5)'; e.target.style.boxShadow = '0 0 20px rgba(255,30,45,0.1)'; }}
+              onBlur={e => { e.target.style.borderColor = search ? 'rgba(255,30,45,0.4)' : 'rgba(255,255,255,0.1)'; e.target.style.boxShadow = 'none'; }}
             />
             <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none">🔍</span>
           </div>
@@ -437,7 +436,7 @@ export default function Certificates() {
                 {SORT_OPTIONS.map(o => (
                   <button key={o} onClick={() => { setSort(o); setSortOpen(false); }}
                     className="w-full text-left px-5 py-3 transition-colors duration-200"
-                    style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.55rem', letterSpacing: '0.15em', color: sort === o ? '#a855f7' : 'rgba(255,255,255,0.5)', background: sort === o ? 'rgba(168,85,247,0.08)' : 'transparent' }}
+                    style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.55rem', letterSpacing: '0.15em', color: sort === o ? 'var(--accent)' : 'rgba(255,255,255,0.5)', background: sort === o ? 'rgba(255,30,45,0.08)' : 'transparent' }}
                     onMouseEnter={e => { if (sort !== o) e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; }}
                     onMouseLeave={e => { if (sort !== o) e.currentTarget.style.background = 'transparent'; }}
                   >
@@ -458,10 +457,10 @@ export default function Certificates() {
               className="px-4 py-2 rounded-full border transition-all duration-300"
               style={{
                 fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.5rem', letterSpacing: '0.15em',
-                borderColor: activeCategory === cat ? 'rgba(168,85,247,0.6)' : 'rgba(255,255,255,0.1)',
-                color: activeCategory === cat ? '#a855f7' : 'rgba(255,255,255,0.4)',
-                background: activeCategory === cat ? 'rgba(168,85,247,0.08)' : 'rgba(255,255,255,0.02)',
-                boxShadow: activeCategory === cat ? '0 0 16px rgba(168,85,247,0.15)' : 'none',
+                borderColor: activeCategory === cat ? 'rgba(255,30,45,0.6)' : 'rgba(255,255,255,0.1)',
+                color: activeCategory === cat ? 'var(--accent)' : 'rgba(255,255,255,0.4)',
+                background: activeCategory === cat ? 'rgba(255,30,45,0.08)' : 'rgba(255,255,255,0.02)',
+                boxShadow: activeCategory === cat ? '0 0 16px rgba(255,30,45,0.15)' : 'none',
                 transform: activeCategory === cat ? 'scale(1.05)' : 'scale(1)',
               }}
             >
@@ -495,7 +494,7 @@ export default function Certificates() {
         <div ref={timelineRef} className="mt-24 pt-16 border-t border-white/10">
           <div className="mb-10">
             <h3 style={{ fontFamily: 'sans-serif', fontWeight: 700, fontSize: '1.75rem', color: '#fff', letterSpacing: '-0.02em', marginBottom: 4 }}>
-              Credential <span style={{ fontStyle: 'italic', fontWeight: 300, background: 'linear-gradient(90deg, #a855f7, #fff)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Breakdown</span>
+              Credential <span style={{ fontStyle: 'italic', fontWeight: 300, background: 'linear-gradient(90deg, var(--accent), #fff)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Breakdown</span>
             </h3>
             <p style={{ fontFamily: 'Inter, sans-serif', color: 'rgba(255,255,255,0.3)', fontSize: '0.9rem' }}>Every certificate, grouped by skill area</p>
           </div>
@@ -503,18 +502,18 @@ export default function Certificates() {
           <div className="relative">
             {/* Vertical line */}
             <div className="absolute left-[22px] top-0 bottom-0 w-[1px] hidden md:block"
-              style={{ background: 'linear-gradient(180deg, transparent, rgba(168,85,247,0.3) 10%, rgba(168,85,247,0.3) 90%, transparent)' }} />
+              style={{ background: 'linear-gradient(180deg, transparent, rgba(255,30,45,0.3) 10%, rgba(255,30,45,0.3) 90%, transparent)' }} />
 
             <div className="flex flex-col gap-8">
               {categoryBreakdown.map(([category, titles]) => (
                 <div key={category} className="tl-item flex gap-6 items-start">
                   {/* Dot */}
                   <div className="relative flex-shrink-0 hidden md:flex items-center justify-center w-11 h-11 rounded-full border"
-                    style={{ background: 'rgba(168,85,247,0.08)', borderColor: 'rgba(168,85,247,0.3)', boxShadow: '0 0 16px rgba(168,85,247,0.15)' }}>
-                    <span style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.6rem', color: '#a855f7', letterSpacing: '0.05em' }}>{titles.length}</span>
+                    style={{ background: 'rgba(255,30,45,0.08)', borderColor: 'rgba(255,30,45,0.3)', boxShadow: '0 0 16px rgba(255,30,45,0.15)' }}>
+                    <span style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.6rem', color: 'var(--accent)', letterSpacing: '0.05em' }}>{titles.length}</span>
                   </div>
                   <div className="flex-1 pb-2">
-                    <div style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.7rem', color: '#a855f7', letterSpacing: '0.2em', marginBottom: 8 }}>{category.toUpperCase()}</div>
+                    <div style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.7rem', color: 'var(--accent)', letterSpacing: '0.2em', marginBottom: 8 }}>{category.toUpperCase()}</div>
                     <div className="flex flex-wrap gap-2">
                       {titles.map(item => (
                         <span key={item} style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.85rem', padding: '4px 14px', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 999, color: 'rgba(255,255,255,0.55)', background: 'rgba(255,255,255,0.03)' }}>

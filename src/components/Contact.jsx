@@ -27,6 +27,13 @@ const FIELDS = [
   { id: 'email', label: 'Email', type: 'email' },
 ];
 
+const INTENTS = [
+  { id: 'hire', label: 'Hire Me', subject: 'Job opportunity', prompt: 'Tell me a bit about the role or project you have in mind.' },
+  { id: 'collaborate', label: 'Collaborate', subject: 'Collaboration idea', prompt: "What are you working on, and where do you think I'd fit in?" },
+  { id: 'project', label: 'Discuss a Project', subject: 'Project discussion', prompt: 'Share a few details about what you\u2019d like to build.' },
+  { id: 'hello', label: 'Just Say Hello', subject: 'Hey Nitin', prompt: 'No agenda needed \u2014 just say hi.' },
+];
+
 function validate(values) {
   const errors = {};
   if (!values.name.trim()) errors.name = 'Name is required';
@@ -48,6 +55,12 @@ export default function Contact() {
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle'); // idle | loading | success | error
   const [statusMessage, setStatusMessage] = useState('');
+  const [intent, setIntent] = useState(null);
+
+  const handleSelectIntent = (item) => {
+    setIntent(item);
+    setValues((prev) => ({ ...prev, subject: item.subject }));
+  };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -134,29 +147,66 @@ export default function Contact() {
     <section 
       id="contact" 
       ref={sectionRef}
-      className="relative w-full min-h-screen bg-[#030303] flex items-center justify-center py-24 px-6 md:px-12 overflow-hidden"
+      className="relative w-full min-h-screen bg-[var(--bg-primary)] flex items-center justify-center py-24 px-6 md:px-12 overflow-hidden"
     >
       {/* Intense Background Glow */}
       <div className="absolute inset-0 pointer-events-none flex items-center justify-center z-0">
-        <div className="w-[800px] h-[500px] bg-purple-600/10 rounded-full blur-[150px] mix-blend-screen opacity-50" />
+        <div className="w-[800px] h-[500px] bg-red-600/10 rounded-full blur-[150px] mix-blend-screen opacity-50" />
       </div>
 
       <div className="max-w-2xl w-full relative z-10 flex flex-col items-center text-center">
         
         {/* Header Block */}
         <div className="mb-12 animate-element">
-          <p className="text-purple-400 font-mono text-sm tracking-[0.3em] uppercase font-bold mb-4">
-            Get In Touch
+          <p className="text-red-400 font-mono text-sm tracking-[0.3em] uppercase font-bold mb-4">
+            Start a Conversation
           </p>
           <h2 className="text-5xl md:text-7xl font-bold tracking-tighter text-white font-display leading-none mb-6 drop-shadow-xl">
-            Let's <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-white pr-2">Connect</span>
+            Let's <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-white pr-2">Connect</span>
           </h2>
           <p className="text-gray-400 font-light text-lg tracking-wide leading-relaxed max-w-xl mx-auto">
-            Whether you have a mobile app idea, a web project to build, or just want to talk tech — my inbox is always open. Let's build something useful together.
+            Whether you have a mobile app idea, a web project to build, or just want to talk tech — my inbox is always open.
           </p>
         </div>
 
+        {/* Intent Picker */}
+        {!intent && (
+          <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 animate-element mb-4">
+            <p className="sm:col-span-2 text-sm uppercase tracking-widest mb-1" style={{ color: 'var(--text-muted)' }}>
+              What are you looking for?
+            </p>
+            {INTENTS.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => handleSelectIntent(item)}
+                className="text-left px-6 py-5 rounded-2xl border transition-all duration-300 hover:scale-[1.02]"
+                style={{ background: 'var(--surface)', borderColor: 'var(--border-subtle)' }}
+                onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--accent)')}
+                onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border-subtle)')}
+              >
+                <span className="block text-base font-semibold font-display text-white mb-1">{item.label}</span>
+                <span className="block text-xs" style={{ color: 'var(--text-muted)' }}>{item.prompt}</span>
+              </button>
+            ))}
+          </div>
+        )}
+
         {/* Form Block */}
+        {intent && (
+        <>
+        <div className="w-full flex items-center justify-between mb-2 animate-element">
+          <span className="text-xs uppercase tracking-widest" style={{ color: 'var(--accent)' }}>
+            {intent.label}
+          </span>
+          <button
+            type="button"
+            onClick={() => setIntent(null)}
+            className="text-xs uppercase tracking-widest underline"
+            style={{ color: 'var(--text-muted)' }}
+          >
+            Change
+          </button>
+        </div>
         <form ref={formRef} onSubmit={handleSubmit} noValidate className="w-full flex flex-col space-y-6">
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -170,14 +220,14 @@ export default function Contact() {
                   disabled={isLoading}
                   aria-invalid={Boolean(errors[id])}
                   aria-describedby={errors[id] ? `${id}-error` : undefined}
-                  className={`peer w-full bg-white/5 border text-white text-base rounded-xl px-5 py-4 outline-none transition-all duration-300 focus:bg-white/10 focus:shadow-[0_0_20px_rgba(168,85,247,0.2)] placeholder-transparent disabled:opacity-50 disabled:cursor-not-allowed ${
+                  className={`peer w-full bg-white/5 border text-white text-base rounded-xl px-5 py-4 outline-none transition-all duration-300 focus:bg-white/10 focus:shadow-[0_0_20px_rgba(255,30,45,0.2)] placeholder-transparent disabled:opacity-50 disabled:cursor-not-allowed ${
                     errors[id]
                       ? 'border-red-500/60 focus:border-red-500'
-                      : 'border-white/5 focus:border-purple-400/50'
+                      : 'border-white/5 focus:border-red-400/50'
                   }`}
                   placeholder={label}
                 />
-                <label htmlFor={id} className="absolute left-5 top-4 text-gray-500 text-base pointer-events-none transition-all duration-300 peer-focus:-top-3 peer-focus:text-xs peer-focus:text-purple-400 peer-valid:-top-3 peer-valid:text-xs peer-valid:text-gray-400 bg-[#030303] px-1 rounded">
+                <label htmlFor={id} className="absolute left-5 top-4 text-gray-500 text-base pointer-events-none transition-all duration-300 peer-focus:-top-3 peer-focus:text-xs peer-focus:text-red-400 peer-valid:-top-3 peer-valid:text-xs peer-valid:text-gray-400 bg-[var(--bg-primary)] px-1 rounded">
                   {label}
                 </label>
                 {errors[id] && (
@@ -199,14 +249,14 @@ export default function Contact() {
               disabled={isLoading}
               aria-invalid={Boolean(errors.subject)}
               aria-describedby={errors.subject ? 'subject-error' : undefined}
-              className={`peer w-full bg-white/5 border text-white text-base rounded-xl px-5 py-4 outline-none transition-all duration-300 focus:bg-white/10 focus:shadow-[0_0_20px_rgba(168,85,247,0.2)] placeholder-transparent disabled:opacity-50 disabled:cursor-not-allowed ${
+              className={`peer w-full bg-white/5 border text-white text-base rounded-xl px-5 py-4 outline-none transition-all duration-300 focus:bg-white/10 focus:shadow-[0_0_20px_rgba(255,30,45,0.2)] placeholder-transparent disabled:opacity-50 disabled:cursor-not-allowed ${
                 errors.subject
                   ? 'border-red-500/60 focus:border-red-500'
-                  : 'border-white/5 focus:border-purple-400/50'
+                  : 'border-white/5 focus:border-red-400/50'
               }`}
               placeholder="Subject"
             />
-            <label htmlFor="subject" className="absolute left-5 top-4 text-gray-500 text-base pointer-events-none transition-all duration-300 peer-focus:-top-3 peer-focus:text-xs peer-focus:text-purple-400 peer-valid:-top-3 peer-valid:text-xs peer-valid:text-gray-400 bg-[#030303] px-1 rounded">
+            <label htmlFor="subject" className="absolute left-5 top-4 text-gray-500 text-base pointer-events-none transition-all duration-300 peer-focus:-top-3 peer-focus:text-xs peer-focus:text-red-400 peer-valid:-top-3 peer-valid:text-xs peer-valid:text-gray-400 bg-[var(--bg-primary)] px-1 rounded">
               Subject
             </label>
             {errors.subject && (
@@ -226,14 +276,14 @@ export default function Contact() {
               aria-invalid={Boolean(errors.message)}
               aria-describedby={errors.message ? 'message-error' : undefined}
               rows="5"
-              className={`peer w-full bg-white/5 border text-white text-base rounded-xl px-5 py-4 outline-none transition-all duration-300 focus:bg-white/10 focus:shadow-[0_0_20px_rgba(168,85,247,0.2)] placeholder-transparent resize-none disabled:opacity-50 disabled:cursor-not-allowed ${
+              className={`peer w-full bg-white/5 border text-white text-base rounded-xl px-5 py-4 outline-none transition-all duration-300 focus:bg-white/10 focus:shadow-[0_0_20px_rgba(255,30,45,0.2)] placeholder-transparent resize-none disabled:opacity-50 disabled:cursor-not-allowed ${
                 errors.message
                   ? 'border-red-500/60 focus:border-red-500'
-                  : 'border-white/5 focus:border-purple-400/50'
+                  : 'border-white/5 focus:border-red-400/50'
               }`}
               placeholder="Message"
             ></textarea>
-            <label htmlFor="message" className="absolute left-5 top-4 text-gray-500 text-base pointer-events-none transition-all duration-300 peer-focus:-top-3 peer-focus:text-xs peer-focus:text-purple-400 peer-valid:-top-3 peer-valid:text-xs peer-valid:text-gray-400 bg-[#030303] px-1 rounded">
+            <label htmlFor="message" className="absolute left-5 top-4 text-gray-500 text-base pointer-events-none transition-all duration-300 peer-focus:-top-3 peer-focus:text-xs peer-focus:text-red-400 peer-valid:-top-3 peer-valid:text-xs peer-valid:text-gray-400 bg-[var(--bg-primary)] px-1 rounded">
               Message
             </label>
             {errors.message && (
@@ -249,14 +299,14 @@ export default function Contact() {
               type="submit" 
               disabled={isLoading}
               aria-busy={isLoading}
-              className="relative group overflow-hidden rounded-full w-full md:w-auto px-12 py-4 border border-purple-400/30 bg-black text-white text-sm uppercase tracking-[0.2em] font-medium transition-all duration-500 hover:scale-[1.02] hover:border-purple-400 shadow-[0_0_0_rgba(168,85,247,0)] hover:shadow-[0_0_30px_rgba(168,85,247,0.3)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
+              className="relative group overflow-hidden rounded-full w-full md:w-auto px-12 py-4 border border-red-400/30 bg-black text-white text-sm uppercase tracking-[0.2em] font-medium transition-all duration-500 hover:scale-[1.02] hover:border-red-400 shadow-[0_0_0_rgba(255,30,45,0)] hover:shadow-[0_0_30px_rgba(255,30,45,0.3)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
             >
-              <span className="absolute inset-0 bg-gradient-to-r from-purple-600/0 via-purple-600/20 to-purple-600/0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
+              <span className="absolute inset-0 bg-gradient-to-r from-red-600/0 via-red-600/20 to-red-600/0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
               
               <span className="relative z-10 flex items-center justify-center space-x-3">
                 {isLoading ? (
                   <>
-                    <svg className="animate-spin h-4 w-4 text-purple-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <svg className="animate-spin h-4 w-4 text-red-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
                     </svg>
@@ -265,7 +315,7 @@ export default function Contact() {
                 ) : (
                   <>
                     <span>Send Message</span>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300 text-purple-400">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300 text-red-400">
                       <line x1="22" y1="2" x2="11" y2="13"></line>
                       <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
                     </svg>
@@ -288,6 +338,8 @@ export default function Contact() {
           </div>
           
         </form>
+        </>
+        )}
       </div>
 
       <style dangerouslySetInnerHTML={{__html: `

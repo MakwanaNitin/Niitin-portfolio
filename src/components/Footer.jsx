@@ -1,14 +1,24 @@
 import React from 'react';
+import { PROFILE } from '../data/portfolioData';
+import EasterEgg from './EasterEgg';
 
-const NAV = ['Home', 'About', 'Skills', 'Projects', 'Experience', 'Certificates', 'Contact'];
+const NAV = [
+  { label: 'Home', id: 'home' },
+  { label: 'About', id: 'about' },
+  { label: 'Work', id: 'work' },
+  { label: 'Skills', id: 'skills' },
+  { label: 'Journey', id: 'journey' },
+  { label: 'Vault', id: 'vault' },
+  { label: 'Contact', id: 'contact' },
+];
 const SOCIAL = [
-  ['GitHub', 'https://github.com/MakwanaNitin'],
-  ['LinkedIn', 'https://www.linkedin.com/in/makwana-niitin'],
-  ['Email', 'mailto:nitinmakwana623@gmail.com'],
+  ['GitHub', PROFILE.socials.github],
+  ['LinkedIn', PROFILE.socials.linkedin],
+  ['Email', `mailto:${PROFILE.email}`],
 ];
 
 export default function Footer() {
-  const scrollTo = (id) => document.getElementById(id.toLowerCase())?.scrollIntoView({ behavior: 'smooth' });
+  const scrollTo = (id) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 
   return (
     <footer style={{ background: 'var(--bg-primary)', borderTop: '1px solid var(--border-subtle)', padding: '56px 5% 28px' }}>
@@ -49,8 +59,8 @@ export default function Footer() {
               </p>
               {NAV.map((link) => (
                 <button
-                  key={link}
-                  onClick={() => scrollTo(link)}
+                  key={link.id}
+                  onClick={() => scrollTo(link.id)}
                   style={{
                     display: 'block',
                     background: 'none',
@@ -63,10 +73,10 @@ export default function Footer() {
                     textAlign: 'left',
                     transition: 'color 0.2s',
                   }}
-                  onMouseEnter={(e) => (e.target.style.color = 'var(--accent-bright)')}
+                  onMouseEnter={(e) => (e.target.style.color = 'var(--accent)')}
                   onMouseLeave={(e) => (e.target.style.color = 'var(--text-secondary)')}
                 >
-                  {link}
+                  {link.label}
                 </button>
               ))}
             </div>
@@ -110,7 +120,7 @@ export default function Footer() {
                 height: 72,
                 objectFit: 'cover',
                 borderRadius: '50%',
-                border: '1px solid rgba(139,92,246,0.3)',
+                border: '1px solid rgba(255,30,45,0.3)',
                 marginBottom: 12,
               }}
             />
@@ -134,9 +144,12 @@ export default function Footer() {
           <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
             © {new Date().getFullYear()} Nitin Makwana. All Rights Reserved.
           </p>
-          <p style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.65rem', color: 'var(--text-muted)', letterSpacing: '0.1em' }}>
-            BUILT WITH REACT · GSAP · TAILWIND
-          </p>
+          <div className="flex items-center gap-5">
+            <p style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.65rem', color: 'var(--text-muted)', letterSpacing: '0.1em' }}>
+              BUILT WITH REACT · GSAP · TAILWIND
+            </p>
+            <EasterEgg />
+          </div>
         </div>
       </div>
     </footer>
