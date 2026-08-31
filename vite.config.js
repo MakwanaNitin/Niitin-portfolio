@@ -5,5 +5,5 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: '/Niitin-portfolio/', // must match your GitHub repo name exactly
+  base: './', // relative path works seamlessly across GitHub Pages, Vercel, Netlify, and local dev
 })
