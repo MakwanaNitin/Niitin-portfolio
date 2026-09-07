@@ -5,5 +5,6 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: './', // relative path works seamlessly across GitHub Pages, Vercel, Netlify, and local dev
+  // On GitHub Actions (GitHub Pages), the repository name subpath is required:
+  base: process.env.GITHUB_ACTIONS ? '/Niitin-portfolio/' : './',
 })

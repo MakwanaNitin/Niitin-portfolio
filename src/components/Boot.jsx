@@ -11,13 +11,29 @@ const BOOT_ITEMS = [
 
 const SESSION_KEY = 'nitinos_booted';
 
+function safeGetSession(key) {
+  try {
+    return typeof window !== 'undefined' ? sessionStorage.getItem(key) : null;
+  } catch {
+    return null;
+  }
+}
+
+function safeSetSession(key, val) {
+  try {
+    if (typeof window !== 'undefined') sessionStorage.setItem(key, val);
+  } catch {
+    // Ignore storage errors in incognito or restricted webviews
+  }
+}
+
 function prefersReducedMotion() {
   if (typeof window === 'undefined' || !window.matchMedia) return false;
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
 export default function Boot({ onComplete }) {
-  const alreadyBooted = typeof window !== 'undefined' && sessionStorage.getItem(SESSION_KEY) === '1';
+  const alreadyBooted = safeGetSession(SESSION_KEY) === '1';
   const reduced = prefersReducedMotion();
   const skip = alreadyBooted || reduced;
 
@@ -27,7 +43,7 @@ export default function Boot({ onComplete }) {
 
   useEffect(() => {
     if (skip) {
-      sessionStorage.setItem(SESSION_KEY, '1');
+      safeSetSession(SESSION_KEY, '1');
       return;
     }
     let i = 0;
@@ -43,7 +59,7 @@ export default function Boot({ onComplete }) {
   }, [skip]);
 
   const handleEnter = () => {
-    sessionStorage.setItem(SESSION_KEY, '1');
+    safeSetSession(SESSION_KEY, '1');
     if (skip) {
       onComplete();
       return;
